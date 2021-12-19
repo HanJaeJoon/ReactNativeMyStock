@@ -20,4 +20,4 @@
 - https://icons.expo.fyi/
 
 ### RN Examples
-- https://github.com/robinhuy/react-native-expo-examples
+- https://github.com/robinhuy/react-native-expo-examplesg
