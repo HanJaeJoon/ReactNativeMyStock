@@ -1,1 +1,1 @@
-# ReactMyStock
+# ReactNativeMyStock
