@@ -34,7 +34,9 @@ init()
   });
 
 
-SmsListener.addListener(insertTxByMessage);
+SmsListener.addListener(message => {
+  insertTxByMessage(message.body);
+});
 
 async function requestReadSmsPermission() {
   try {
