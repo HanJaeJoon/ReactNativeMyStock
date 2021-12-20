@@ -38,3 +38,6 @@ public void onHostDestroy() {
 
 ### RN Examples
 - https://github.com/robinhuy/react-native-expo-examplesg
+
+### build & release
+- https://docs.expo.dev/build/setup/
