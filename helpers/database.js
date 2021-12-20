@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import Transaction from '../models/transaction';
 
-const db = SQLite.openDatabase('transactionData.db');
+const db = SQLite.openDatabase(`transactionData${__DEV__ ? '_dev' : ''}.db`);
 
 export const init = () => {
     const promise = new Promise((resolve, reject) => {
@@ -35,7 +35,7 @@ export const populateData = async () => {
 
     for (let i = 0; i < 20; i++) {
         let randomCount = parseInt(1 + Math.random() * (5 - 1));
-        let randomPastDay = -1 * parseInt(0 + Math.random() * (7 - 0));
+        let randomPastDay = -1 * parseInt(1 + Math.random() * (7 - 1));
         let randomPrice = (993 + Math.random() * (1,243.49 - 930)).toFixed(2);
 
         await insertTx(new Transaction(
@@ -95,4 +95,34 @@ export const deleteTx = (id) => {
     });
 
     return promise;
+};
+
+export const insertTxByMessage = (message) => {
+    // [Web발신]
+    // [미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD1001.8400
+    if (message.includes('미래에셋증권') && message.includes('TSLA')) {
+      const regex = /(매수|매도).*\s(\d*)주.*\sUSD(\d*\.\d*)/gim;
+      const groups = regex.exec(message);
+  
+      console.log(groups);
+
+      if (!groups || groups.length !== 4) {
+        return;
+      }
+  
+      insertTx(new Transaction(
+        'TSLA',
+        groups[2],
+        groups[3],
+        moment().format('YYYY-MM-DD'),
+        groups[1] === '매수')
+      )
+        .then((id) => {
+          console.log(`$transaction(id:{id}) is inserted!`)
+        })
+        .catch((err) => {
+          console.info(message);
+          console.log(err);
+        })
+    }
 };
