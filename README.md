@@ -16,6 +16,19 @@
 
 ### SMS listener
 - https://github.com/andreyvital/react-native-android-sms-listener
+- 일단 백그라운드에서도 sms 읽어오기 위해
+`node_modules\react-native-android-sms-listener\android\src\main\java\com\centaurwarchief\smslistener\SmsListenerModule.java` 파일 아래와 같이 수정
+```
+@Override
+public void onHostPause() {
+    //unregisterReceiver(mReceiver);
+}
+
+@Override
+public void onHostDestroy() {
+    //unregisterReceiver(mReceiver);
+}
+```
 
 ### Navigation bar
 - https://reactnavigation.org/
