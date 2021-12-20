@@ -98,6 +98,8 @@ export const deleteTx = (id) => {
 };
 
 export const insertTxByMessage = (message) => {
+    console.log(message);
+    
     // [Web발신]
     // [미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD1001.8400
     if (message.includes('미래에셋증권') && message.includes('TSLA')) {
