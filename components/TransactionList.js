@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-
-import { SafeAreaView, SectionList, StyleSheet, Text, View } from 'react-native';
-
+import { SafeAreaView, SectionList, StyleSheet, Text } from 'react-native';
+import { FloatingMenu } from './common/FloatingMenu';
 import { getAllTx } from "../helpers/database";
 
-export default function TransactionList() {
+export default function TransactionList({ navigation }) {
   const [transactions, setTransactions] = useState([]);
 
   getAllTx().then(data => {
@@ -43,6 +42,7 @@ export default function TransactionList() {
           <Text style={styles.header}>{date}</Text>
         )}
       />
+      <FloatingMenu navigation={navigation} />
     </SafeAreaView>
   );
 }

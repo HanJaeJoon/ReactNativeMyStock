@@ -1,9 +1,9 @@
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
 
-export default function Settings() {
+export default function AddTransaction() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>설정화면</Text>
+      <Text>입력해라</Text>
     </SafeAreaView>
   );
 }

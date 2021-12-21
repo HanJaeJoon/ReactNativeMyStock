@@ -5,8 +5,8 @@ import Transaction from '../models/transaction';
 
 const db = SQLite.openDatabase(`transactionData${__DEV__ ? '_dev' : ''}.db`);
 
-export const init = () => {
-    const promise = new Promise((resolve, reject) => {
+export const initData = () => {
+    new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
                 'create table if not exists transactionData\
@@ -23,12 +23,32 @@ export const init = () => {
                 (_, err) => reject(err)
             );
         });
-    });
+    })
+        .then(() => {
+            console.log('database initialized');
 
-    return promise;
+            if (__DEV__) {
+            populateData();
+            insertTxByMessage('test');
+            insertTxByMessage('[미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 12주, USD901.10');
+            insertTxByMessage('[미래에셋증권]No.8587, 전량매도, 나스닥, TSLA, 13주, USD1001.8400');
+            insertTxByMessage('[미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD1023.8400');
+            insertTxByMessage('[미래에셋증권]No.8587, 일부매도, 나스닥, TSLA, 3주, USD1023.24');
+            insertTxByMessage(
+                '[Web발신]\
+                [미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 4주, USD1004.678');
+            insertTxByMessage(
+                '[Web발신]\
+                [미래에셋증권]No.8587, 일부매수, 나스닥, GOOGL, 2주, USD1231.8400');
+            }
+        })
+        .catch((err) => {
+            console.log('initializing database failed');
+            console.log(err);
+        });
 };
 
-export const populateData = async () => {
+const populateData = async () => {
     db.transaction((tx) => {
         tx.executeSql('DELETE FROM transactionData');
     });
@@ -49,6 +69,36 @@ export const populateData = async () => {
     let transactions = await getAllTx();
 
     console.log(`popluate ${transactions.length} transactions`);
+};
+
+const insertTxByMessage = (message) => {
+    // [Web발신]
+    // [미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD1001.8400
+    if (message.includes('미래에셋증권') && message.includes('TSLA')) {
+      const regex = /(매수|매도).*\s(\d*)주.*\sUSD(\d*\.\d*)/gim;
+      const groups = regex.exec(message);
+  
+      console.log(groups);
+
+      if (!groups || groups.length !== 4) {
+        return;
+      }
+  
+      insertTx(new Transaction(
+        'TSLA',
+        groups[2],
+        groups[3],
+        moment().format('YYYY-MM-DD'),
+        groups[1] === '매수')
+      )
+        .then((id) => {
+          console.log(`$transaction(id:{id}) is inserted!`)
+        })
+        .catch((err) => {
+          console.info(message);
+          console.log(err);
+        })
+    }
 };
 
 export const insertTx = (model) => {
@@ -95,34 +145,4 @@ export const deleteTx = (id) => {
     });
 
     return promise;
-};
-
-export const insertTxByMessage = (message) => {
-    // [Web발신]
-    // [미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD1001.8400
-    if (message.includes('미래에셋증권') && message.includes('TSLA')) {
-      const regex = /(매수|매도).*\s(\d*)주.*\sUSD(\d*\.\d*)/gim;
-      const groups = regex.exec(message);
-  
-      console.log(groups);
-
-      if (!groups || groups.length !== 4) {
-        return;
-      }
-  
-      insertTx(new Transaction(
-        'TSLA',
-        groups[2],
-        groups[3],
-        moment().format('YYYY-MM-DD'),
-        groups[1] === '매수')
-      )
-        .then((id) => {
-          console.log(`$transaction(id:{id}) is inserted!`)
-        })
-        .catch((err) => {
-          console.info(message);
-          console.log(err);
-        })
-    }
 };
