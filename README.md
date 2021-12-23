@@ -1,11 +1,26 @@
 # ReactNativeMyStock
 
 ### Todo
-- [ ] List: 매수/매도 기록 리스트, 입력, 수정
-- [x] System: Local DB/API? ~~Realm~~ => Sqlite로 CRUD 구현
-- [ ] System: SMS listener sms parsing -> insert
-- [ ] Home: 실시간 주가, 그래프, 보유 잔고 평단, 수익률 등 통계
-- [ ] Settings: google login으로 계정 연동?
+- [x] C: sms를 통한 insert
+- [ ] C: sms를 통한 insert => 백그라운드에서 동작 가능할지? 현재는 일단 최초 앱 실행 이후에 백그라운드 동작
+- [ ] C: sms parsing 로직 개선
+- [ ] C: sms 증권사 확장
+- [ ] C: 카카오톡 확장 가능할지 리서치
+- [ ] R: 거래 기록 리스트 UI 리서치
+- [ ] U: row 옆 아이콘/슬라이드
+- [ ] D: row 옆 아이콘/슬라이드
+- [x] System: Local DB/API? ~~Realm~~ => 일단 Sqlite로 CRUD 구현
+- [ ] Home: 실시간 주가
+- [ ] Home: 실시간 주가변동 적용?
+- [ ] Home: 평단 or 변동 그래프, 
+- [ ] Home: 보유 잔고 평단, 수익률
+- [ ] Home: 목표 설정, 목표 달성률
+- [x] Entry: 입력 -> insert
+- [ ] Entry: validation
+- [ ] Entry: UI 개선
+- [ ] List: 최소 기능
+- [ ] List: UI 개선
+- [ ] google login?
 
 ### ~~Realm~~
 - ~~https://docs.mongodb.com/realm/sdk/react-native/~~
