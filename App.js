@@ -65,4 +65,5 @@ const tabScreenOptions = ({ route }) => ({
     
     return <FontAwesome name={iconName} size={size} color={color} />;
   },
+  tabBarHideOnKeyboard: true,
 });
