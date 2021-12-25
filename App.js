@@ -14,19 +14,24 @@ import { initData, insertTxByMessage } from './helpers/database';
 initData();
 
 // SMS listener
-SmsListener.addListener(message => {
+const subscription = SmsListener.addListener(message => {
   insertTxByMessage(message.body);
 });
 
 async function requestReadSmsPermission() {
   try {
-    await PermissionsAndroid.request(
+    const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.READ_SMS,
       {
         title: 'SMS 권한',
-        message: 'SMS 권한 달라!'
+        message: 'SMS 권한 달라!',
       }
     );
+
+    if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('permission denied!');
+      subscription.remove();
+    }
   } catch (err) {
     console.log(err);
   }
@@ -38,11 +43,11 @@ export default function App() {
   });
 
   return (
-    <NavigationContainer  initialRouteName="Home">
+    <NavigationContainer  initialRouteName='Home'>
       <Tab.Navigator screenOptions={tabScreenOptions}>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="등록하기" component={AddTransaction} />
-        <Tab.Screen name="거래기록" component={TransactionList} />
+        <Tab.Screen name='Home' component={Home} />
+        <Tab.Screen name='등록하기' component={AddTransaction} />
+        <Tab.Screen name='거래기록' component={TransactionList} />
       </Tab.Navigator>
     </NavigationContainer>
   );
