@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { SafeAreaView, View, Text, StyleSheet, Button } from 'react-native';
-import { TextInput, HelperText } from 'react-native-paper';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
+import { TextInput, HelperText, Button } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import moment from 'moment';
@@ -9,11 +9,12 @@ import Transaction from '../models/transaction';
 import { insertTx } from '../helpers/database';
 
 export default function AddTransaction() {
-  const [count, setCount] = React.useState(0);
-  const [price, setPrice] = React.useState(0);
+  const [count, setCount] = React.useState('0');
+  const [price, setPrice] = React.useState('0');
   const [date, setDate] = React.useState(new Date());
   const [show, setShow] = React.useState(false);
   const [isBuying, setIsBuying] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -25,13 +26,20 @@ export default function AddTransaction() {
     setShow(true);
   };
 
-  const hasErrors = (value) => {
+  const hasErrors = () => {
     let regex = /^[0-9]*$/;
 
-    return !regex.test(value.toString());
+    if (!regex.test(count)) return true;
+    if (count == '0') return true;
+    if (!regex.test(price)) return true;
+    if (price == '0') return true;
+
+    return false;
   };
 
   const addTransaction = () => {
+    setIsLoading(true);
+
     insertTx(new Transaction(
         'TSLA',
         count,
@@ -39,11 +47,14 @@ export default function AddTransaction() {
         moment(date).format('YYYY-MM-DD'),
         isBuying
     ))
-      .then(() => alert("등록 성공!"))
+      .then(() => {
+        setIsLoading(false);
+        alert("등록 성공!")
+      })
       .catch(() => alert("등록 실패!"));
 
-    setCount(0);
-    setPrice(0);
+    setCount('0');
+    setPrice('0');
     setDate(new Date());
     setIsBuying(true);
   };
@@ -54,6 +65,7 @@ export default function AddTransaction() {
         label="종목명"
         value="TSLA"
         disabled="true"
+        selectionColor="#1fc685"
       />
       <Picker
         selectedValue={isBuying.toString()}
@@ -67,23 +79,28 @@ export default function AddTransaction() {
         label="수량"
         placeholder="수량을 입력해주세요."
         value={count}
+        right={<TextInput.Affix text="주" />}
         onChangeText={count => setCount(count)}
+        activeUnderlineColor="#1fc685"
       />
-      <HelperText type="error" visible={hasErrors(count)}>
-        잘못된 값입니다!
-      </HelperText>
       <TextInput
         label="단가"
         placeholder="단가를 입력해주세요."
         value={price}
+        right={<TextInput.Affix text="USD" />}
         onChangeText={price => setPrice(price)}
+        activeUnderlineColor="#1fc685"
       />
-      <HelperText type="error" visible={hasErrors(price)}>
-        잘못된 값입니다!
-      </HelperText>
-      <View>
-        <Button onPress={showDatepicker} title="Show date picker!" />
-      </View>
+      <TextInput
+        label="날짜"
+        value={moment(date).format('YYYY-MM-DD')}
+        onFocus={showDatepicker}
+        right={<TextInput.Icon
+          name="calendar"
+          onPress={showDatepicker}
+          />}
+        activeUnderlineColor="#1fc685"
+      />
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -91,16 +108,22 @@ export default function AddTransaction() {
           mode="date"
           display="default"
           onChange={onChange}
+          backgroundColor="#1fc685"
         />
       )}
+      <HelperText type="error" visible={hasErrors()}>
+        수량, 단가를 확인해주세요.
+      </HelperText>
       <View>
         <Button
+          style={styles.button}
+          mode="contained"
           onPress={addTransaction}
-          title="등록"
-          disabled={
-            hasErrors(count) || hasErrors(price) || !count || !price
-          }
-        />
+          loading={isLoading}
+          disabled={hasErrors()}
+        >
+          등록
+        </Button>
       </View>
     </SafeAreaView>
   );
@@ -109,6 +132,8 @@ export default function AddTransaction() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
-});
+  button: {
+    backgroundColor: '#1fc685',
+  },
+}); 
