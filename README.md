@@ -2,11 +2,11 @@
 
 ### Todo
 - [x] C: sms를 통한 insert
-- [ ] C: sms를 통한 insert => 백그라운드에서 동작 가능할지? 현재는 일단 최초 앱 실행 이후에 백그라운드 동작
+- [ ] C: sms를 통한 insert 백그라운드에서 동작 가능할지 리서치 => 일단 최초 앱 실행 이후에 백그라운드 동작
 - [ ] C: sms parsing 로직 개선
 - [ ] C: sms 증권사 확장
 - [ ] C: 카카오톡 확장 가능할지 리서치
-- [ ] R: 거래 기록 리스트 UI 리서치
+- [ ] R: 거래 기록 리스트 UI 리서치(현재 SectionList)
 - [ ] U: row 옆 아이콘/슬라이드
 - [ ] D: row 옆 아이콘/슬라이드
 - [x] System: Local DB/API? ~~Realm~~ => 일단 Sqlite로 CRUD 구현
@@ -16,10 +16,11 @@
 - [ ] Home: 보유 잔고 평단, 수익률
 - [ ] Home: 목표 설정, 목표 달성률
 - [x] Entry: 입력 -> insert
-- [ ] Entry: validation
-- [ ] Entry: UI 개선
+- [x] Entry: validation
+- [x] Entry: UI 개선
 - [ ] List: 최소 기능
 - [ ] List: UI 개선
+- [ ] 용어 통일 필요
 - [ ] google login?
 
 ### ~~Realm~~
