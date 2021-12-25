@@ -55,7 +55,7 @@ public void onHostDestroy() {
 - https://icons.expo.fyi/
 
 ### RN Examples
-- https://github.com/robinhuy/react-native-expo-examplesg
+- https://github.com/robinhuy/react-native-expo-examples
 
 ### build & release
 - https://docs.expo.dev/build/setup/
