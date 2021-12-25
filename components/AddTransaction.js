@@ -27,7 +27,7 @@ export default function AddTransaction() {
   };
 
   const hasErrors = () => {
-    let regex = /^[0-9]*$/;
+    let regex = /^[0-9\.]*$/;
 
     if (!regex.test(count)) return true;
     if (count == '0') return true;

@@ -28,18 +28,18 @@ export const initData = () => {
             console.log('database initialized');
 
             if (__DEV__) {
-            populateData();
-            insertTxByMessage('test');
-            insertTxByMessage('[미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 12주, USD901.10');
-            insertTxByMessage('[미래에셋증권]No.8587, 전량매도, 나스닥, TSLA, 13주, USD1001.8400');
-            insertTxByMessage('[미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD1023.8400');
-            insertTxByMessage('[미래에셋증권]No.8587, 일부매도, 나스닥, TSLA, 3주, USD1023.24');
-            insertTxByMessage(
-                '[Web발신]\
-                [미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 4주, USD1004.678');
-            insertTxByMessage(
-                '[Web발신]\
-                [미래에셋증권]No.8587, 일부매수, 나스닥, GOOGL, 2주, USD1231.8400');
+                populateData();
+                insertTxByMessage('test');
+                insertTxByMessage('[미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 12주, USD901.10');
+                insertTxByMessage('[미래에셋증권]No.8587, 전량매도, 나스닥, TSLA, 13주, USD1001.8400');
+                insertTxByMessage('[미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD1023.8400');
+                insertTxByMessage('[미래에셋증권]No.8587, 일부매도, 나스닥, TSLA, 3주, USD1023.24');
+                insertTxByMessage(
+                    '[Web발신]\
+                    [미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 4주, USD1004.678');
+                insertTxByMessage(
+                    '[Web발신]\
+                    [미래에셋증권]No.8587, 일부매수, 나스닥, GOOGL, 2주, USD1231.8400');
             }
         })
         .catch((err) => {
