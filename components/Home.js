@@ -16,7 +16,8 @@ export default function Home() {
       .then(response => response.json())
       .then(data => {
         let stockInfo = data.quoteResponse.result[0];
-        console.log(stockInfo);
+        //console.log(stockInfo);
+        
         setCurrentPrice(stockInfo.regularMarketPrice)
       });
 
@@ -24,7 +25,7 @@ export default function Home() {
     let sumPrice = 0;
 
     getAllTx().then(data => {
-      console.log(data);
+      //console.log(data);
 
       for (let i = 0; i < data.length; i++) {
         let tx = data[i];
@@ -33,7 +34,7 @@ export default function Home() {
         sumPrice += (tx.isBuying ? 1 : -1) * +tx.stockPrice * +tx.stockCount;
       }
 
-      console.log(`${sumPrice}, ${sumCount}`)
+      //console.log(`${sumPrice}, ${sumCount}`)
       let avgPrice = (sumPrice / sumCount);
 
       setMyPrice(isNaN(avgPrice) ? '' : avgPrice.toFixed(2));

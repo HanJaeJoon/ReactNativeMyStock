@@ -31,13 +31,9 @@ async function requestReadSmsPermission() {
     if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
       console.log('permission denied!');
       subscription.remove();
-      insertTxByMessage('[미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD1000');
-    } else {
-      insertTxByMessage('[미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD2000');
     }
   } catch (err) {
-    insertTxByMessage('[미래에셋증권]No.8587, 전량매수, 나스닥, TSLA, 1주, USD1500');
-    console.log(err);
+    console.log(`error ${err}`);
   }
 }
 
