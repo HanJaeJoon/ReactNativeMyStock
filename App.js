@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
@@ -49,6 +49,7 @@ export default function App() {
         <Tab.Screen name='등록하기' component={AddTransaction} />
         <Tab.Screen name='거래기록' component={TransactionList} />
       </Tab.Navigator>
+      <StatusBar barStyle="dark-content" hidden={false} translucent={true} />
     </NavigationContainer>
   );
 }
