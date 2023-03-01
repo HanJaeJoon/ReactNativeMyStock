@@ -69,7 +69,7 @@ export default function Home() {
         <View style={styles.contentContainer}>
           <Text>현재가: {currentPrice}</Text>
           <Text>평균단가: {myPrice}</Text>
-          <Text>수익률: {myPrice ? ((myPrice - currentPrice) / myPrice * 100).toFixed(2) + '%' : ''}</Text>
+          <Text>수익률: {myPrice ? ((currentPrice - myPrice) / myPrice * 100).toFixed(2) + '%' : ''}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
